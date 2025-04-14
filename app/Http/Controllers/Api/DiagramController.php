@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use function Jawira\PlantUml\encodep;
+use Illuminate\Http\Request;
 
-class PlantUmlController extends Controller
+class DiagramController extends Controller
 {
     /**
-     * Generates and displays the State Machine Diagram (SMD)
+     * Generates and returns the State Machine Diagram (SMD)
      * from a local .puml file using PlantUML's SVG rendering.
      */
     public function smdDiagram()
@@ -18,11 +19,13 @@ class PlantUmlController extends Controller
         $encodedSMD = encodep($smdCode);
         $smdPlantumlUrl = "https://www.plantuml.com/plantuml/svg/{$encodedSMD}";
 
-        return view('diagram.smd', ['smdPlantumlUrl' => $smdPlantumlUrl]);
+        return response()->json([
+            'url' => $smdPlantumlUrl,
+        ]);
     }
 
     /**
-     * Generates and displays the Entity Relationship Diagram (ERD)
+     * Generates and returns the Entity Relationship Diagram (ERD)
      * from a local .puml file using PlantUML's SVG rendering.
      */
     public function erdDiagram()
@@ -32,6 +35,8 @@ class PlantUmlController extends Controller
         $encodedERD = encodep($erdCode);
         $erdPlantumlUrl = "https://www.plantuml.com/plantuml/svg/{$encodedERD}";
 
-        return view('diagram.erd', ['erdPlantumlUrl' => $erdPlantumlUrl]);
+        return response()->json([
+            'url' => $erdPlantumlUrl,
+        ]);
     }
 }
