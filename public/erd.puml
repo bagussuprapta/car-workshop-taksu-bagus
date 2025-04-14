@@ -1,20 +1,12 @@
 @startuml Entity Relationship Diagram
-entity CarOwner {
-  * id : int <<PK>>
-  --
-  name : string
-  email : string
-  password : string
-  created_at : datetime
-  updated_at : datetime
-}
 
-entity Mechanic {
+entity User {
   * id : int <<PK>>
   --
   name : string
   email : string
   password : string
+  role : enum('admin', 'car_owner', 'mechanic')
   created_at : datetime
   updated_at : datetime
 }
@@ -31,10 +23,10 @@ entity Service {
 entity CarRepair {
   * id : int <<PK>>
   --
-  car_owner_id : int <<FK>>
+  user_id : int <<FK>> // car owner
   car_model : string
   date_brought : datetime
-  status : string
+  status : enum('pending', 'in_progress', 'waiting_for_review', 'completed')
   created_at : datetime
   updated_at : datetime
 }
@@ -44,7 +36,7 @@ entity RepairServiceProposal {
   --
   car_repair_id : int <<FK>>
   service_id : int <<FK>>
-  status : string
+  status : enum('proposed', 'approved', 'rejected', 'completed', 'complaint')
   created_at : datetime
   updated_at : datetime
 }
@@ -52,9 +44,9 @@ entity RepairServiceProposal {
 entity JobAssignment {
   * id : int <<PK>>
   --
-  mechanic_id : int <<FK>>
+  user_id : int <<FK>> // mechanic
   repair_service_proposal_id : int <<FK>>
-  status : string
+  status : enum('assigned', 'in_progress', 'done')
   created_at : datetime
   updated_at : datetime
 }
@@ -64,15 +56,16 @@ entity Complaint {
   --
   car_repair_id : int <<FK>>
   description : text
-  status : string
+  status : enum('open', 'in_progress', 'resolved')
   created_at : datetime
   updated_at : datetime
 }
 
-CarOwner ||--o{ CarRepair : has
+User ||--o{ CarRepair : owns
 CarRepair ||--o{ RepairServiceProposal : proposes
 RepairServiceProposal }o--|| Service : involves
 RepairServiceProposal ||--o{ JobAssignment : assigned_to
-Mechanic ||--o{ JobAssignment : handles
+User ||--o{ JobAssignment : handles
 CarRepair ||--o{ Complaint : may_have
+
 @enduml
