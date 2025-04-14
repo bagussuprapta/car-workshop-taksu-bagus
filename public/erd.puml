@@ -1,0 +1,78 @@
+@startuml
+entity CarOwner {
+  * id : int <<PK>>
+  --
+  name : string
+  email : string
+  password : string
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity Mechanic {
+  * id : int <<PK>>
+  --
+  name : string
+  email : string
+  password : string
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity Service {
+  * id : int <<PK>>
+  --
+  name : string
+  price : decimal
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity CarRepair {
+  * id : int <<PK>>
+  --
+  car_owner_id : int <<FK>>
+  car_model : string
+  date_brought : datetime
+  status : string
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity RepairServiceProposal {
+  * id : int <<PK>>
+  --
+  car_repair_id : int <<FK>>
+  service_id : int <<FK>>
+  status : string
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity JobAssignment {
+  * id : int <<PK>>
+  --
+  mechanic_id : int <<FK>>
+  repair_service_proposal_id : int <<FK>>
+  status : string
+  created_at : datetime
+  updated_at : datetime
+}
+
+entity Complaint {
+  * id : int <<PK>>
+  --
+  car_repair_id : int <<FK>>
+  description : text
+  status : string
+  created_at : datetime
+  updated_at : datetime
+}
+
+CarOwner ||--o{ CarRepair : has
+CarRepair ||--o{ RepairServiceProposal : proposes
+RepairServiceProposal }o--|| Service : involves
+RepairServiceProposal ||--o{ JobAssignment : assigned_to
+Mechanic ||--o{ JobAssignment : handles
+CarRepair ||--o{ Complaint : may_have
+@enduml

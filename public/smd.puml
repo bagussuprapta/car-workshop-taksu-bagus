@@ -1,0 +1,70 @@
+@startuml
+skinparam style strictuml
+
+' Define states as rectangles
+rectangle "Car In Workshop" as CarInWorkshop
+rectangle "Diagnosing" as Diagnosing
+rectangle "Proposal Made" as ProposalMade
+rectangle "Awaiting Approval" as AwaitingApproval
+rectangle "Awaiting Feedback" as AwaitingFeedback
+rectangle "Repair In Progress" as RepairInProgress
+rectangle "Job Completed" as JobCompleted
+rectangle "Car Inspection" as CarInspection
+rectangle "Job Reworked" as JobReworked
+rectangle "Car Ready" as CarReady
+rectangle "Invoice Sent" as InvoiceSent
+
+' Initial and final states
+circle "Start" as Start
+circle "End" as End
+
+Start --> CarInWorkshop
+
+' Transitions
+CarInWorkshop --> Diagnosing : Start diagnosis
+Diagnosing --> ProposalMade : Create service proposal
+ProposalMade --> AwaitingApproval : Awaiting approval from owner
+ProposalMade --> AwaitingFeedback : Awaiting feedback from owner
+AwaitingApproval --> RepairInProgress : Owner approves proposal
+AwaitingFeedback --> ProposalMade : Feedback received, modify proposal
+RepairInProgress --> JobCompleted : All jobs completed
+JobCompleted --> CarInspection : Owner inspects car
+CarInspection --> JobReworked : Job rework needed
+CarInspection --> CarReady : Owner satisfied with job
+JobReworked --> RepairInProgress : Rework job in progress
+CarReady --> InvoiceSent : Invoice sent to owner
+InvoiceSent --> End : Car picked up
+
+' Notes
+note right of CarInWorkshop
+  Car received at the workshop
+end note
+
+note right of Diagnosing
+  Diagnose car issues
+end note
+
+note right of ProposalMade
+  Service proposal created
+end note
+
+note right of AwaitingApproval
+  Waiting for owner's approval
+end note
+
+note right of RepairInProgress
+  Car service in progress
+end note
+
+note right of CarInspection
+  Owner checks the result
+end note
+
+note right of JobReworked
+  Rework based on complaint
+end note
+
+note right of InvoiceSent
+  Invoice sent via email
+end note
+@enduml
