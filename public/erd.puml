@@ -1,4 +1,4 @@
-@startuml
+@startuml Entity Relationship Diagram
 entity CarOwner {
   * id : int <<PK>>
   --

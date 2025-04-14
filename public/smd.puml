@@ -1,4 +1,4 @@
-@startuml
+@startuml State Machine Diagram
 skinparam style strictuml
 
 ' Define states as rectangles
