@@ -1,6 +1,7 @@
 import { useAuth } from "../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Navbar from '../components/Navbar';
 
 const Home = () => {
     const { isAuthenticated, loading } = useAuth();
@@ -15,8 +16,8 @@ const Home = () => {
     if (loading || !isAuthenticated) return null;
 
     return (
-        <div className="flex items-center justify-center h-screen">
-            <h1 className="text-xl font-semibold">Welcome to Home Page!</h1>
+        <div className="">
+            <Navbar></Navbar>
         </div>
     );
 };

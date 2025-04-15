@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     const validateToken = async (tokenValue = token) => {
+
         if (!tokenValue) {
             setIsAuthenticated(false);
             setAuthenticatedUser(null);
@@ -31,7 +32,7 @@ export const AuthProvider = ({ children }) => {
             }
 
             const data = await res.json();
-            setAuthenticatedUser(data.user);
+            setAuthenticatedUser(data);
             setIsAuthenticated(true);
         } catch (err) {
             localStorage.removeItem("token");
@@ -69,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider
             value={{
-                user: authenticatedUser,
+                authenticatedUser,
                 token,
                 login,
                 logout,
