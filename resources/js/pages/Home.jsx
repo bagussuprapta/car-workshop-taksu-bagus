@@ -1,10 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-export default function Home() {
+const Home = () => {
+    const { isAuthenticated, loading } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!loading && !isAuthenticated) {
+            navigate("/login");
+        }
+    }, [isAuthenticated, loading, navigate]);
+
+    if (loading || !isAuthenticated) return null;
+
     return (
-        <div>
-            <h1>Home Page</h1>
+        <div className="flex items-center justify-center h-screen">
+            <h1 className="text-xl font-semibold">Welcome to Home Page!</h1>
         </div>
     );
-}
+};
+
+export default Home;
