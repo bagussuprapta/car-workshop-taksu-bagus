@@ -12,6 +12,12 @@ class User extends Authenticatable implements JWTSubject
 
     protected $fillable = ['name', 'email', 'password', 'role'];
 
+    protected $casts = [
+        'role' => 'string'
+    ];
+
+    public static $roles = ['admin', 'car_owner', 'mechanic'];
+
     public function carRepairs()
     {
         return $this->hasMany(CarRepair::class);
@@ -30,5 +36,13 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function setRoleAttribute($value)
+    {
+        if (!in_array($value, self::$roles)) {
+            throw new \InvalidArgumentException("Invalid role: {$value}. Valid roles are: " . implode(', ', self::$roles));
+        }
+        $this->attributes['role'] = $value;
     }
 }

@@ -9,15 +9,21 @@ class JobAssignment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'repair_service_proposal_id', 'status'];
+    protected $fillable = [
+        'repair_service_proposal_id',
+        'mechanic_id',
+        'notes'
+    ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $with = ['mechanic'];
 
     public function repairServiceProposal()
     {
         return $this->belongsTo(RepairServiceProposal::class);
+    }
+
+    public function mechanic()
+    {
+        return $this->belongsTo(User::class, 'mechanic_id');
     }
 }

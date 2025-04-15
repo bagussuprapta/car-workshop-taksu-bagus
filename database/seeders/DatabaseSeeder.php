@@ -3,6 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Service;
+use App\Models\CarRepair;
+use App\Models\RepairServiceProposal;
+use App\Models\JobAssignment;
+use App\Models\Complaint;
+use Illuminate\Support\Facades\DB;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +19,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
+        Complaint::truncate();
+        JobAssignment::truncate();
+        RepairServiceProposal::truncate();
+        CarRepair::truncate();
+        Service::truncate();
+        User::truncate();
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $this->call([
             UserSeeder::class,

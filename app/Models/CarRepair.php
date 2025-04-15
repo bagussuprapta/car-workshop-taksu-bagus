@@ -16,7 +16,7 @@ class CarRepair extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function repairServiceProposals()
+    public function proposals()
     {
         return $this->hasMany(RepairServiceProposal::class);
     }
@@ -24,5 +24,10 @@ class CarRepair extends Model
     public function complaints()
     {
         return $this->hasMany(Complaint::class);
+    }
+
+    public function jobAssignments()
+    {
+        return $this->hasMany(JobAssignment::class);
     }
 }

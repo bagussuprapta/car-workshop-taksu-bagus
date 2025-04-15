@@ -1,15 +1,19 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function Diagram() {
     const { type } = useParams();
     const [svgUrl, setSvgUrl] = React.useState("");
 
     React.useEffect(() => {
-        fetch(`/api/diagram/${type}`)
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.url) setSvgUrl(data.url);
+        axios
+            .get(`/api/diagram/${type}`)
+            .then((response) => {
+                if (response.data.url) setSvgUrl(response.data.url);
+            })
+            .catch((error) => {
+                console.error("Error fetching diagram:", error);
             });
     }, [type]);
 

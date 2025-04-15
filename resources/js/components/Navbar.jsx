@@ -1,5 +1,11 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { useAuth } from "../contexts/AuthProvider";
+import Proposals from "./admin/Proposals";
+import Users from "./admin/Users";
+import Service from "./admin/Service";
+import Job from "./mechanic/Job";
+import MyCar from "./customer/MyCar";
+import ServiceHistory from "./customer/ServiceHistory";
 
 function Navbar() {
     const { authenticatedUser, logout } = useAuth();
@@ -20,16 +26,16 @@ function Navbar() {
             { label: "Dashboard", component: <Dashboard /> },
             { label: "Users", component: <Users /> },
             { label: "Proposals", component: <Proposals /> },
-            { label: "Job Management", component: <JobManagement /> },
+            { label: "Service", component: <Service /> },
         ],
         mechanic: [
-            { label: "Jobs", component: <Jobs /> },
+            { label: "Jobs", component: <Job /> },
             { label: "Schedule", component: <Schedule /> },
             { label: "Parts", component: <Parts /> },
         ],
         car_owner: [
             { label: "Home", component: <Home /> },
-            { label: "My Cars", component: <MyCars /> },
+            { label: "My Cars", component: <MyCar /> },
             { label: "Service History", component: <ServiceHistory /> },
         ],
     };
@@ -91,152 +97,71 @@ export default Navbar;
 function Dashboard() {
     return (
         <div className="text-center text-sm mt-2">
-            <h3 className='text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto'>
+            <h3 className="text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto">
                 Dashboard
             </h3>
-            <p className='mt-4 text-gray-500 text-xs'>
-                If content data does not appear, it is still under development. <br />
+            <p className="mt-4 text-gray-500 text-xs">
+                If content data does not appear, it is still under development.{" "}
+                <br />
                 Please check other menus to explore more features. <br />
                 Or log in as a different role. <br />
-                Or maybe this requirement is not included in the current implementation.
+                Or maybe this requirement is not included in the current
+                implementation.
             </p>
         </div>
-    )
-}
-function Users() {
-    return (
-        <div className="text-center text-sm mt-2">
-            <h3 className='text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto'>
-                Users
-            </h3>
-            <p className='mt-4 text-gray-500 text-xs'>
-                If content data does not appear, it is still under development. <br />
-                Please check other menus to explore more features. <br />
-                Or log in as a different role. <br />
-                Or maybe this requirement is not included in the current implementation.
-            </p>
-        </div>
-    )
-}
-function Proposals() {
-    return (
-        <div className="text-center text-sm mt-2">
-            <h3 className='text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto'>
-                Proposals
-            </h3>
-            <p className='mt-4 text-gray-500 text-xs'>
-                If content data does not appear, it is still under development. <br />
-                Please check other menus to explore more features. <br />
-                Or log in as a different role. <br />
-                Or maybe this requirement is not included in the current implementation.
-            </p>
-        </div>
-    )
-}
-function JobManagement() {
-    return (
-        <div className="text-center text-sm mt-2">
-            <h3 className='text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto'>
-                Job Management
-            </h3>
-            <p className='mt-4 text-gray-500 text-xs'>
-                If content data does not appear, it is still under development. <br />
-                Please check other menus to explore more features. <br />
-                Or log in as a different role. <br />
-                Or maybe this requirement is not included in the current implementation.
-            </p>
-        </div>
-    )
+    );
 }
 
-function Jobs() {
-    return (
-        <div className="text-center text-sm mt-2">
-            <h3 className='text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto'>
-                Jobs
-            </h3>
-            <p className='mt-4 text-gray-500 text-xs'>
-                If content data does not appear, it is still under development. <br />
-                Please check other menus to explore more features. <br />
-                Or log in as a different role. <br />
-                Or maybe this requirement is not included in the current implementation.
-            </p>
-        </div>
-    )
-}
 function Schedule() {
     return (
         <div className="text-center text-sm mt-2">
-            <h3 className='text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto'>
+            <h3 className="text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto">
                 Schedule
             </h3>
-            <p className='mt-4 text-gray-500 text-xs'>
-                If content data does not appear, it is still under development. <br />
+            <p className="mt-4 text-gray-500 text-xs">
+                If content data does not appear, it is still under development.{" "}
+                <br />
                 Please check other menus to explore more features. <br />
                 Or log in as a different role. <br />
-                Or maybe this requirement is not included in the current implementation.
+                Or maybe this requirement is not included in the current
+                implementation.
             </p>
         </div>
-    )
+    );
 }
+
 function Parts() {
     return (
         <div className="text-center text-sm mt-2">
-            <h3 className='text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto'>
+            <h3 className="text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto">
                 Parts
             </h3>
-            <p className='mt-4 text-gray-500 text-xs'>
-                If content data does not appear, it is still under development. <br />
+            <p className="mt-4 text-gray-500 text-xs">
+                If content data does not appear, it is still under development.{" "}
+                <br />
                 Please check other menus to explore more features. <br />
                 Or log in as a different role. <br />
-                Or maybe this requirement is not included in the current implementation.
+                Or maybe this requirement is not included in the current
+                implementation.
             </p>
         </div>
-    )
+    );
 }
 
 function Home() {
     return (
         <div className="text-center text-sm mt-2">
-            <h3 className='text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto'>
+            <h3 className="text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto">
                 Home
             </h3>
-            <p className='mt-4 text-gray-500 text-xs'>
-                If content data does not appear, it is still under development. <br />
+            <p className="mt-4 text-gray-500 text-xs">
+                If content data does not appear, it is still under development.{" "}
+                <br />
                 Please check other menus to explore more features. <br />
                 Or log in as a different role. <br />
-                Or maybe this requirement is not included in the current implementation.
+                Or maybe this requirement is not included in the current
+                implementation.
             </p>
         </div>
-    )
-}
-function MyCars() {
-    return (
-        <div className="text-center text-sm mt-2">
-            <h3 className='text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto'>
-                My Cars
-            </h3>
-            <p className='mt-4 text-gray-500 text-xs'>
-                If content data does not appear, it is still under development. <br />
-                Please check other menus to explore more features. <br />
-                Or log in as a different role. <br />
-                Or maybe this requirement is not included in the current implementation.
-            </p>
-        </div>
-    )
-}
-function ServiceHistory() {
-    return (
-        <div className="text-center text-sm mt-2">
-            <h3 className='text-sm border border-black w-fit px-3 py-1 rounded-full mx-auto'>
-                Service History
-            </h3>
-            <p className='mt-4 text-gray-500 text-xs'>
-                If content data does not appear, it is still under development. <br />
-                Please check other menus to explore more features. <br />
-                Or log in as a different role. <br />
-                Or maybe this requirement is not included in the current implementation.
-            </p>
-        </div>
-    )
+    );
 }

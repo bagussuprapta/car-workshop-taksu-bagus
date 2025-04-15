@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -11,7 +12,6 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     const validateToken = async (tokenValue = token) => {
-
         if (!tokenValue) {
             setIsAuthenticated(false);
             setAuthenticatedUser(null);
@@ -20,19 +20,13 @@ export const AuthProvider = ({ children }) => {
         }
 
         try {
-            const res = await fetch("/api/auth/me", {
-                method: "GET",
+            const response = await axios.get("/api/auth/me", {
                 headers: {
                     Authorization: `Bearer ${tokenValue}`,
                 },
             });
 
-            if (!res.ok) {
-                throw new Error("Invalid token");
-            }
-
-            const data = await res.json();
-            setAuthenticatedUser(data);
+            setAuthenticatedUser(response.data);
             setIsAuthenticated(true);
         } catch (err) {
             localStorage.removeItem("token");

@@ -13,7 +13,7 @@ class RepairServiceProposal extends Model
 
     public function carRepair()
     {
-        return $this->belongsTo(CarRepair::class);
+        return $this->belongsTo(CarRepair::class, 'car_repair_id');
     }
 
     public function service()
@@ -23,6 +23,11 @@ class RepairServiceProposal extends Model
 
     public function jobAssignments()
     {
-        return $this->hasMany(JobAssignment::class);
+        return $this->hasMany(JobAssignment::class, 'repair_service_proposal_id');
+    }
+
+    public function jobAssignment()
+    {
+        return $this->hasOne(JobAssignment::class);
     }
 }

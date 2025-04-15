@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
+import axios from "axios";
 
 const Register = () => {
     const [name, setName] = useState("");
@@ -21,31 +22,31 @@ const Register = () => {
         setError("");
 
         try {
-            const res = await fetch("/api/auth/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ name, email, password }),
-            });
+            const response = await axios.post(
+                "/api/auth/register",
+                { name, email, password },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
 
-            if (!res.ok) {
-                const data = await res.json();
-                throw new Error(data.message || "Registration failed");
-            }
-
-            const data = await res.json();
-
-            login(data.token, data.user);
+            login(response.data.token, response.data.user);
         } catch (err) {
-            setError(err.message);
+            setError(err.response?.data?.message || err.message);
         }
     };
 
     return (
         <div className="flex flex-col gap-4 items-center justify-center h-screen max-w-2xs mx-auto">
-            <h1 className='font-bold text-2xl text-center'>Register to <span className='italic'>Car Workshop</span></h1>
-            <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-xs">
+            <h1 className="font-bold text-2xl text-center">
+                Register to <span className="italic">Car Workshop</span>
+            </h1>
+            <form
+                onSubmit={handleSubmit}
+                className="flex flex-col w-full max-w-xs"
+            >
                 <input
                     type="text"
                     placeholder="Name"
@@ -79,7 +80,10 @@ const Register = () => {
                 </button>
                 <p className="text-sm mt-2 text-center">
                     Already have an account?{" "}
-                    <Link to="/login" className="text-stone-600 hover:underline">
+                    <Link
+                        to="/login"
+                        className="text-stone-600 hover:underline"
+                    >
                         Login
                     </Link>
                 </p>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
+import axios from "axios";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -20,30 +21,31 @@ const Login = () => {
         setError("");
 
         try {
-            const res = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-            });
+            const response = await axios.post(
+                "/api/auth/login",
+                { email, password },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
 
-            if (!res.ok) {
-                const data = await res.json();
-                throw new Error(data.message || "Login failed");
-            }
-
-            const data = await res.json();
-            login(data.token, data.user);
+            login(response.data.token, response.data.user);
         } catch (err) {
-            setError(err.message);
+            setError(err.response?.data?.message || err.message);
         }
     };
 
     return (
         <div className="flex flex-col gap-4 items-center justify-center h-screen max-w-2xs mx-auto">
-            <h1 className='font-bold text-2xl text-center'>Login to <span className='italic'>Car Workshop</span></h1>
-            <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-xs">
+            <h1 className="font-bold text-2xl text-center">
+                Login to <span className="italic">Car Workshop</span>
+            </h1>
+            <form
+                onSubmit={handleSubmit}
+                className="flex flex-col w-full max-w-xs"
+            >
                 <input
                     type="email"
                     placeholder="Email"
@@ -69,7 +71,10 @@ const Login = () => {
                 </button>
                 <p className="text-sm mt-2 text-center">
                     Don't have an account?{" "}
-                    <Link to="/register" className="text-stone-600 hover:underline">
+                    <Link
+                        to="/register"
+                        className="text-stone-600 hover:underline"
+                    >
                         Register
                     </Link>
                 </p>
