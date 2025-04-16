@@ -7,8 +7,16 @@ use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Controller for handling service-related operations
+ */
 class ServiceController extends Controller
 {
+    /**
+     * Get all services
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         try {
@@ -23,12 +31,18 @@ class ServiceController extends Controller
             ]);
             return response()->json([
                 'status' => 'error',
-                'message' => 'Gagal mengambil data services',
+                'message' => 'Failed to fetch services',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
+    /**
+     * Create a new service
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         try {
@@ -41,7 +55,7 @@ class ServiceController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Service berhasil ditambahkan',
+                'message' => 'Service added successfully',
                 'data' => $service
             ], 201);
         } catch (\Exception $e) {
@@ -51,12 +65,18 @@ class ServiceController extends Controller
             ]);
             return response()->json([
                 'status' => 'error',
-                'message' => 'Gagal menambahkan service',
+                'message' => 'Failed to add service',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
+    /**
+     * Get a specific service by ID
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id)
     {
         try {
@@ -72,12 +92,19 @@ class ServiceController extends Controller
             ]);
             return response()->json([
                 'status' => 'error',
-                'message' => 'Service tidak ditemukan',
+                'message' => 'Service not found',
                 'error' => $e->getMessage()
             ], 404);
         }
     }
 
+    /**
+     * Update a specific service
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -92,7 +119,7 @@ class ServiceController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Service berhasil diupdate',
+                'message' => 'Service updated successfully',
                 'data' => $service
             ]);
         } catch (\Exception $e) {
@@ -103,12 +130,18 @@ class ServiceController extends Controller
             ]);
             return response()->json([
                 'status' => 'error',
-                'message' => 'Gagal mengupdate service',
+                'message' => 'Failed to update service',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
+    /**
+     * Delete a specific service
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
         try {
@@ -117,7 +150,7 @@ class ServiceController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Service berhasil dihapus'
+                'message' => 'Service deleted successfully'
             ]);
         } catch (\Exception $e) {
             Log::error('Failed to delete service:', [
@@ -126,7 +159,7 @@ class ServiceController extends Controller
             ]);
             return response()->json([
                 'status' => 'error',
-                'message' => 'Gagal menghapus service',
+                'message' => 'Failed to delete service',
                 'error' => $e->getMessage()
             ], 500);
         }

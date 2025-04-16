@@ -11,8 +11,17 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Exception;
 
+/**
+ * Controller for handling authentication-related operations
+ */
 class AuthController extends Controller
 {
+    /**
+     * Register a new user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(Request $request)
     {
         try {
@@ -52,6 +61,12 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Authenticate user and generate JWT token
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         try {
@@ -76,6 +91,12 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Logout user and invalidate JWT token
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout(Request $request)
     {
         try {
@@ -96,6 +117,11 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Get authenticated user information
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function me()
     {
         try {

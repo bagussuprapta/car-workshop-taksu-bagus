@@ -8,8 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Controller for handling mechanic-related operations
+ */
 class MechanicController extends Controller
 {
+    /**
+     * Get all jobs assigned to the authenticated mechanic
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getJobs()
     {
         try {
@@ -50,6 +58,13 @@ class MechanicController extends Controller
         }
     }
 
+    /**
+     * Update the status of a specific job
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateJobStatus(Request $request, $id)
     {
         try {
@@ -63,7 +78,7 @@ class MechanicController extends Controller
             if (!$job->jobAssignments()->where('mechanic_id', Auth::id())->exists()) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Anda tidak memiliki akses ke job ini'
+                    'message' => 'You do not have access to this job'
                 ], 403);
             }
 
@@ -71,13 +86,13 @@ class MechanicController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Status job berhasil diperbarui'
+                'message' => 'Job status updated successfully'
             ]);
         } catch (\Exception $e) {
             Log::error('Error updating job status: ' . $e->getMessage());
             return response()->json([
                 'status' => 'error',
-                'message' => 'Gagal memperbarui status job',
+                'message' => 'Failed to update job status',
                 'error' => $e->getMessage()
             ], 500);
         }

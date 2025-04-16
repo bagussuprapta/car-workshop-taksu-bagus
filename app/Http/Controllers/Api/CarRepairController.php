@@ -13,8 +13,16 @@ use App\Models\User;
 use App\Models\JobAssignment;
 use App\Models\ServiceProposal;
 
+/**
+ * Controller for handling car repair-related operations
+ */
 class CarRepairController extends Controller
 {
+    /**
+     * Get all car repairs with their related data
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         try {
@@ -37,6 +45,12 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Create a new car repair with service proposals
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -92,6 +106,14 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Update the status of a service proposal
+     *
+     * @param Request $request
+     * @param int $carRepairId
+     * @param int $proposalId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateProposalStatus(Request $request, $carRepairId, $proposalId)
     {
         try {
@@ -129,6 +151,13 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Update a car repair record
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id)
     {
         try {
@@ -167,6 +196,12 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Delete a car repair and its related data
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
         try {
@@ -174,13 +209,13 @@ class CarRepairController extends Controller
 
             $carRepair = CarRepair::findOrFail($id);
 
-            // Hapus semua proposal terkait
+            // Delete all related proposals
             $carRepair->proposals()->delete();
 
-            // Hapus semua keluhan terkait
+            // Delete all related complaints
             $carRepair->complaints()->delete();
 
-            // Hapus perbaikan mobil
+            // Delete car repair
             $carRepair->delete();
 
             DB::commit();
@@ -199,6 +234,13 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Add a new service to a car repair
+     *
+     * @param Request $request
+     * @param int $carRepairId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addService(Request $request, $carRepairId)
     {
         try {
@@ -236,6 +278,11 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Get all available services
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getServices()
     {
         try {
@@ -254,6 +301,11 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Get all available mechanics
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getMechanics()
     {
         try {
@@ -273,6 +325,13 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Assign a mechanic to a car repair
+     *
+     * @param Request $request
+     * @param int $carRepairId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function assignMechanic(Request $request, $carRepairId)
     {
         try {
@@ -333,6 +392,13 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Delete a service from a car repair
+     *
+     * @param CarRepair $carRepair
+     * @param int $service
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteService(CarRepair $carRepair, $service)
     {
         try {
@@ -362,6 +428,12 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Get cars owned by the authenticated user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getMyCars(Request $request)
     {
         try {
@@ -391,6 +463,12 @@ class CarRepairController extends Controller
         }
     }
 
+    /**
+     * Get service history for a car
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getServiceHistory(Request $request)
     {
         try {

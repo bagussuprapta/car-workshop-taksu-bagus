@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use function Jawira\PlantUml\encodep;
 use Illuminate\Http\Request;
 
+/**
+ * Controller for handling diagram-related operations
+ */
 class DiagramController extends Controller
 {
     /**
-     * Generates and returns the State Machine Diagram (SMD)
-     * from a local .puml file using PlantUML's SVG rendering.
+     * Generate and return State Machine Diagram (SMD) in SVG format
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function smdDiagram()
     {
@@ -25,8 +29,9 @@ class DiagramController extends Controller
     }
 
     /**
-     * Generates and returns the Entity Relationship Diagram (ERD)
-     * from a local .puml file using PlantUML's SVG rendering.
+     * Generate and return Entity Relationship Diagram (ERD) in SVG format
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function erdDiagram()
     {

@@ -8,8 +8,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Controller for handling user-related operations
+ */
 class UserController extends Controller
 {
+    /**
+     * Get all users with their basic information
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         try {
@@ -22,12 +30,19 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Gagal mengambil data user',
+                'message' => 'Failed to fetch user data',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
+    /**
+     * Update user role
+     *
+     * @param Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateRole(Request $request, $id)
     {
         try {
@@ -56,7 +71,7 @@ class UserController extends Controller
                     'string',
                     function ($attribute, $value, $fail) use ($validRoles) {
                         if (!in_array($value, $validRoles)) {
-                            $fail('Role yang dipilih tidak valid. Role yang tersedia: ' . implode(', ', $validRoles));
+                            $fail('Selected role is invalid. Available roles: ' . implode(', ', $validRoles));
                         }
                     }
                 ]
@@ -75,7 +90,7 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Role berhasil diubah',
+                'message' => 'Role updated successfully',
                 'data' => $user
             ]);
         } catch (\InvalidArgumentException $e) {
@@ -85,7 +100,7 @@ class UserController extends Controller
             ]);
             return response()->json([
                 'status' => 'error',
-                'message' => 'Role tidak valid',
+                'message' => 'Invalid role',
                 'error' => $e->getMessage()
             ], 422);
         } catch (\Exception $e) {
@@ -95,12 +110,17 @@ class UserController extends Controller
             ]);
             return response()->json([
                 'status' => 'error',
-                'message' => 'Gagal mengubah role user',
+                'message' => 'Failed to update user role',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
 
+    /**
+     * Get all users with car owner role
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getCarOwners()
     {
         try {
