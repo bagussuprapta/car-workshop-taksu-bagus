@@ -99,6 +99,50 @@ composer run dev
 
 This command will automatically start both the Laravel server and the Vite development server for React.
 
+## Testing
+
+Sample unit test for the user registration feature (file: tests/Feature/AuthControllerTest.php):
+
+```php
+test_register_user_successfully()
+{
+    $payload = [
+        'name' => 'Test User',
+        'email' => 'testuser@example.com',
+        'password' => 'password123',
+        'role' => 'car_owner',
+    ];
+
+    $response = $this->postJson('/api/auth/register', $payload);
+
+    $response->assertStatus(201)
+        ->assertJsonStructure([
+            'message',
+            'token',
+            'user' => [
+                'id', 'name', 'email', 'role', 'created_at', 'updated_at'
+            ]
+        ]);
+
+    $this->assertDatabaseHas('users', [
+        'email' => 'testuser@example.com',
+        'role' => 'car_owner',
+    ]);
+}
+```
+
+To run all unit tests:
+
+```bash
+php artisan test
+```
+
+To run only the AuthController tests:
+
+```bash
+php artisan test --filter=AuthControllerTest
+```
+
 ## Demo Accounts
 
 Here are the accounts that can be used for testing:
