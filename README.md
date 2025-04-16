@@ -30,23 +30,45 @@ composer install
 cp .env.example .env
 ```
 
-4. Generate application key:
+4. Install Node.js dependencies:
+
+```bash
+npm install
+```
+
+5. Generate application key:
 
 ```bash
 php artisan key:generate
 ```
 
-Atau Anda bisa membuat APP_KEY secara manual dengan cara:
+Or you can create the APP_KEY manually by:
 
-1. Buka file .env
-2. Cari baris yang berisi APP_KEY=
-3. Isi dengan string acak 32 karakter, contoh:
+1. Open the .env file
+2. Find the line containing APP_KEY=
+3. Fill it with a random 32-character string, for example:
 
 ```
 APP_KEY=base64:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-5. Configure database in .env file:
+6. Generate JWT Secret:
+
+```bash
+php artisan jwt:secret
+```
+
+Or you can create the JWT_SECRET manually by:
+
+1. Open the .env file
+2. Find the line containing JWT_SECRET=
+3. Fill it with a random 32-character string, for example:
+
+```
+JWT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+7. Configure the database in the .env file:
 
 ```
 DB_CONNECTION=mysql
@@ -57,19 +79,25 @@ DB_USERNAME=<your-username>
 DB_PASSWORD=<your-password>
 ```
 
-6. Run migrations and seeders:
+8. Create the database manually (if the migrate command fails):
+
+```sql
+CREATE DATABASE car_workshop_taksu_bagus;
+```
+
+9. Run migrations and seeders:
 
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-7. Run the application:
+10. Run the application:
 
 ```bash
 composer run dev
 ```
 
-This command will automatically start both the Laravel server and Vite development server for React.
+This command will automatically start both the Laravel server and the Vite development server for React.
 
 ## Demo Accounts
 
@@ -78,10 +106,8 @@ Here are the accounts that can be used for testing:
 ### Admin
 
 1. Bagus Suprapta
-
     - Email: superadmin@carworkshop.com
     - Password: Admin123!
-
 2. Ahmad Rizki
     - Email: manager@carworkshop.com
     - Password: Manager123!
@@ -89,15 +115,11 @@ Here are the accounts that can be used for testing:
 ### Mechanics
 
 1. David Wilson
-
     - Email: d.wilson@carworkshop.com
     - Password: Mechanic123!
-
 2. Robert Garcia
-
     - Email: r.garcia@carworkshop.com
     - Password: Mechanic123!
-
 3. James Lee
     - Email: j.lee@carworkshop.com
     - Password: Mechanic123!
@@ -105,15 +127,11 @@ Here are the accounts that can be used for testing:
 ### Car Owners
 
 1. John Smith
-
     - Email: john.smith@example.com
     - Password: CarOwner123!
-
 2. Sarah Johnson
-
     - Email: sarah.j@example.com
     - Password: CarOwner123!
-
 3. Michael Brown
     - Email: m.brown@example.com
     - Password: CarOwner123!
